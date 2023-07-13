@@ -1,27 +1,29 @@
 'use client'
 import { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 interface FormDataProps {
+  id: string,
   user: string,
   titulo: string,
   descricao: string
 }
 
-export default function FormCriarTask() {
+export default function FormEditarTask(props: { id: string, user: string, titulo: string, descricao: string }) {
+
   const [formData, setFormData] = useState<FormDataProps>({
-    user: '',
-    titulo: '',
-    descricao: '',
+    id: props.id,
+    user: props.user,
+    titulo: props.titulo,
+    descricao: props.descricao,
   })
-  const router = useRouter()
 
   const handleSubmit = async () => {
     const data = await fetch('/api/tasks', {
       method: 'POST',
       body: JSON.stringify(formData)
     })
+
     const json = await data.json()
   }
 
@@ -46,9 +48,7 @@ export default function FormCriarTask() {
         <input type="text" id="descricao" name="descricao" value={formData.descricao} onChange={handleForm}
           className="bg-gray-200 rounded-sm p-2 outline-none" />
         <div className="flex justify-between">
-          <button type="submit" value="Criar" className='bg-green-400 hover:bg-green-600 hover:text-white rounded-md px-4 py-2 w-2/5'>
-            criar
-          </button>
+          <button type="submit" className='bg-green-400 hover:bg-green-600 hover:text-white rounded-md px-4 py-2 w-2/5'>Atualizar</button>
           <button><Link href='/' className="text-gray-400 hover:text-gray-500 pr-2">Cancelar</Link></button>
         </div>
 

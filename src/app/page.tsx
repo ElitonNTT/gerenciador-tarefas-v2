@@ -1,10 +1,8 @@
-import FormCriarTask from "@/components/FormCriarTask"
 import Lista from "@/components/Lista"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <FormCriarTask />
+    <main className="flex flex-col min-h-screen items-center justify-center my-2">
       <Lista />
     </main>
   )

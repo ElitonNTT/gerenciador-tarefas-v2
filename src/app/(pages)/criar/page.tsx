@@ -1,8 +1,11 @@
+import FormCriarTask from '@/components/FormCriarTask'
 import React from 'react'
 
 function page() {
   return (
-    <div>page</div>
+    <div className='flex min-h-screen w-screen flex-col items-center justify-center'>
+      <FormCriarTask />
+    </div>
   )
 }
 
