@@ -1,8 +1,5 @@
 import prisma from "@/lib/prisma/prismaClient";
-import EditSvg from "@/assets/create-outline.svg";
-import Image from "next/image";
 import Link from "next/link";
-import DeleteButton from "./DeleteButton";
 import Accordion from "./Accordion";
 
 const getTasks = async () => prisma.tasks.findMany({});
@@ -24,28 +21,13 @@ export default async function Lista() {
           </Link>
         </div>
         {data.map((task, index) => (
-          <div
+          <Accordion
             key={index}
-            className="bg-gray-200 flex flex-col justify-center p-2 rounded-md border-b-2 border-gray-300"
-          >
-            <div className="flex justify-between">
-              <h3 className="font-semibold">{task.titulo}</h3>
-              <div className="flex gap-2">
-                <button type="button">
-                  <Link href={"/editar/" + task.id}>
-                    <Image
-                      src={EditSvg}
-                      alt="edit"
-                      width={20}
-                      className="hover:scale-105"
-                    />
-                  </Link>
-                </button>
-                <DeleteButton id={task.id} />
-              </div>
-            </div>
-            <Accordion user={task.user} descricao={task.descricao} />
-          </div>
+            id={task.id}
+            user={task.user}
+            titulo={task.titulo}
+            descricao={task.descricao}
+          />
         ))}
       </main>
     </>
