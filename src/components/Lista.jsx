@@ -1,24 +1,26 @@
 import prisma from "@/lib/prisma/prismaClient";
 import EditSvg from "@/assets/create-outline.svg";
-import DeleteSvg from "@/assets/trash-outline.svg";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteButton from "./DeleteButton";
 
 const getTasks = async () => prisma.tasks.findMany({});
 
 export default async function Lista() {
   const data = await getTasks();
+
   return (
     <>
       <main className="flex flex-col h-5/6 w-5/6 gap-2 bg-white p-4 rounded-md shadow-lg shadow-purple-400">
         <div className="flex justify-between items-center mb-4">
-          <h2>Gerenciador de Tarefas</h2>
-          <button
-            value="Criar"
-            className="bg-green-400 hover:bg-green-600 hover:text-white rounded-md px-4 py-2 w-2/5"
+          <h2 className="font-bold text-4xl">Gerenciador de Tarefas</h2>
+
+          <Link
+            href="/criar"
+            className="flex justify-center items-center bg-green-400 hover:bg-green-600 hover:text-white rounded-md px-4 py-2 w-2/5"
           >
-            <Link href="/criar">Criar</Link>
-          </button>
+            Criar
+          </Link>
         </div>
         {data.map((task, index) => (
           <div
@@ -38,20 +40,13 @@ export default async function Lista() {
                     />
                   </Link>
                 </button>
-                <button>
-                  <Image
-                    src={DeleteSvg}
-                    alt="delete"
-                    width={20}
-                    className="hover:scale-105"
-                  />
-                </button>
+                <DeleteButton id={task.id} />
               </div>
             </div>
-            {/* <div>{task.user}</div> */}
-            {/* <div className="text-sm font-medium text-gray-700">
+            <div>{task.user}</div>
+            <div className="text-sm font-medium text-gray-700">
               {task.descricao}
-            </div> */}
+            </div>
           </div>
         ))}
       </main>
