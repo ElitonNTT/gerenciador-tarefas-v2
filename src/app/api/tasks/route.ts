@@ -21,3 +21,42 @@ export async function POST(request: Request) {
     return NextResponse.error;
   }
 }
+
+export async function PUT(request: Request) {
+  try {
+    const { id, user, titulo, descricao } = await request.json();
+
+    const update = await prisma.tasks.update({
+      where: {
+        id: id,
+      },
+      data: {
+        user: user,
+        titulo: titulo,
+        descricao: descricao,
+      },
+    });
+    return NextResponse.json({
+      user: update.user,
+      titulo: update.titulo,
+      descricao: update.descricao,
+    });
+  } catch (error) {
+    return NextResponse.error;
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { id } = await request.json();
+
+    const deleteTask = await prisma.tasks.delete({
+      where: {
+        id: id,
+      },
+    });
+    return NextResponse.json("deletado com sucesso");
+  } catch (error) {
+    return NextResponse.error;
+  }
+}

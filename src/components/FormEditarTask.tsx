@@ -20,10 +20,9 @@ export default function FormEditarTask(props: { id: string, user: string, titulo
 
   const handleSubmit = async () => {
     const data = await fetch('/api/tasks', {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(formData)
     })
-
     const json = await data.json()
   }
 

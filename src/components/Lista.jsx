@@ -49,9 +49,9 @@ export default async function Lista() {
               </div>
             </div>
             {/* <div>{task.user}</div> */}
-            <div className="text-sm font-medium text-gray-700">
+            {/* <div className="text-sm font-medium text-gray-700">
               {task.descricao}
-            </div>
+            </div> */}
           </div>
         ))}
       </main>
