@@ -1,7 +1,6 @@
 'use client'
 import Image from "next/image"
 import DeleteSvg from "@/assets/trash-outline.svg";
-import { useEffect } from "react";
 
 interface DeleteButtonProps {
   id: string

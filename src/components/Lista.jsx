@@ -3,6 +3,7 @@ import EditSvg from "@/assets/create-outline.svg";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteButton from "./DeleteButton";
+import Accordion from "./Accordion";
 
 const getTasks = async () => prisma.tasks.findMany({});
 
@@ -43,10 +44,7 @@ export default async function Lista() {
                 <DeleteButton id={task.id} />
               </div>
             </div>
-            <div>{task.user}</div>
-            <div className="text-sm font-medium text-gray-700">
-              {task.descricao}
-            </div>
+            <Accordion user={task.user} descricao={task.descricao} />
           </div>
         ))}
       </main>

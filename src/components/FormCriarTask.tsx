@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 interface FormDataProps {
   user: string,
@@ -15,7 +14,6 @@ export default function FormCriarTask() {
     titulo: '',
     descricao: '',
   })
-  const router = useRouter()
 
   const handleSubmit = async () => {
     const data = await fetch('/api/tasks', {
@@ -51,7 +49,6 @@ export default function FormCriarTask() {
           </button>
           <button type="button"><Link href='/' className="text-gray-400 hover:text-gray-500 pr-2">Cancelar</Link></button>
         </div>
-
       </form>
     </>
   )
