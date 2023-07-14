@@ -3,7 +3,7 @@ import React from 'react'
 
 function page() {
   return (
-    <div className='flex min-h-screen w-screen flex-col items-center justify-center'>
+    <div className='flex min-h-screen flex-col items-center justify-center'>
       <FormCriarTask />
     </div>
   )

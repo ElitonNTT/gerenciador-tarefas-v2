@@ -14,7 +14,7 @@ async function page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="flex min-h-screen w-screen flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center">
       <FormEditarTask
         id={params.id}
         user={data.user}

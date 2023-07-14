@@ -19,8 +19,8 @@ function Accordion(props: AccordionProps) {
     visible ? setVisible(false) : setVisible(true)
   }
   return (
-    <main className="bg-gray-200 flex flex-col justify-center p-2 rounded-md border-b-2 border-gray-300">
-      <div className="flex justify-between">
+    <main className="bg-gray-200 flex flex-col justify-center p-4 rounded-md border-b-2 border-gray-300">
+      <div className="flex justify-between ">
         <h3 className="font-bold text-xl cursor-pointer w-full" onClick={handleAccordion}>{props.titulo}</h3>
         <div className="flex gap-2">
           <button type="button">
@@ -28,7 +28,7 @@ function Accordion(props: AccordionProps) {
               <Image
                 src={EditSvg}
                 alt="edit"
-                width={20}
+                width={26}
                 className="hover:scale-105"
               />
             </Link>
@@ -36,10 +36,10 @@ function Accordion(props: AccordionProps) {
           <DeleteButton id={props.id} />
         </div>
       </div>
-      <div className='mt-2'>
+      <div className=''>
         {visible && (
           <>
-            <div className='text-sm font-light'>{props.user}</div>
+            <div className='text-sm font-light mt-4'>{props.user}</div>
             <div className='text-lg font-normal'>{props.descricao}</div>
           </>
         )}

@@ -19,7 +19,7 @@ export default function DeleteButton(id: DeleteButtonProps) {
       <Image
         src={DeleteSvg}
         alt="delete"
-        width={20}
+        width={26}
         className="hover:scale-105"
       />
     </button>

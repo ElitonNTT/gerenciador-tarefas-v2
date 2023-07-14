@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 
 interface FormDataProps {
@@ -9,8 +10,11 @@ interface FormDataProps {
 }
 
 export default function FormCriarTask() {
+
+  const { data: session } = useSession()
+
   const [formData, setFormData] = useState<FormDataProps>({
-    user: '',
+    user: `${session?.user?.name}`,
     titulo: '',
     descricao: '',
   })
