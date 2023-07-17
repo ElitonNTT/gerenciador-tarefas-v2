@@ -2,20 +2,24 @@
 'use client'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 function Header() {
   const { data: session } = useSession()
   const router = useRouter()
 
-  if (!session) {
-    router.push('/login')
-  }
+  useEffect(() => {
+    if (!session)
+      router.push('/login')
+  }, [])
+
 
   return (
     <div className='flex justify-between items-center px-4 py-2'>
       <div>Logo</div>
       <div className='flex items-center gap-4 '>
-        {session && (
+
+        {!session ? (<></>) : (
           <>
             <div>{session?.user?.name}</div>
             <img src={`${session?.user?.image}`} alt='Avatar' width={36} height={36} className='rounded-full' />

@@ -40,7 +40,7 @@ export default function FormCriarTask() {
   return (
     <>
       <form onSubmit={handleSubmit} className="flex flex-col h-5/6 w-5/6 gap-2 bg-white p-4 rounded-md shadow-lg shadow-purple-400">
-        <h2 className="flex self-center font-bold text-4xl">Gerenciador</h2>
+        <h2 className="flex self-center font-bold text-4xl">Criar tarefa</h2>
         <label htmlFor="titulo" className="font-semibold text-lg">Titulo:</label>
         <input type="text" id="titulo" name="titulo" value={formData.titulo} onChange={handleForm}
           className="bg-gray-200 rounded-sm p-2 outline-none" />
