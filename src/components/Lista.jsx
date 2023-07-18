@@ -19,6 +19,11 @@ export default async function Lista() {
             Criar
           </Link>
         </div>
+        <input
+          type="text"
+          placeholder="Buscar..."
+          className="flex self-center outline-none border-b-2 w-2/5"
+        />
         {data.map((task, index) => (
           <Accordion
             key={index}
