@@ -8,7 +8,6 @@ export default function Home() {
       <Suspense fallback={<Loading />}>
         <Lista />
       </Suspense>
-
     </main>
   )
 }

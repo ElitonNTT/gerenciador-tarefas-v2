@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 interface FormDataProps {
   id: string,
@@ -11,6 +12,8 @@ interface FormDataProps {
 
 export default function FormEditarTask(props: { id: string, user: string, titulo: string, descricao: string }) {
 
+  const router = useRouter()
+
   const [formData, setFormData] = useState<FormDataProps>({
     id: props.id,
     user: props.user,
@@ -18,12 +21,15 @@ export default function FormEditarTask(props: { id: string, user: string, titulo
     descricao: props.descricao,
   })
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
     const data = await fetch('/api/tasks', {
       method: 'PUT',
       body: JSON.stringify(formData)
     })
     const json = await data.json()
+    router.push('/')
+    return json
   }
 
   const handleForm = (e: any) => {

@@ -1,7 +1,8 @@
 'use client'
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 interface FormDataProps {
   user: string,
@@ -12,6 +13,7 @@ interface FormDataProps {
 export default function FormCriarTask() {
 
   const { data: session } = useSession()
+  const router = useRouter()
 
   const [formData, setFormData] = useState<FormDataProps>({
     user: `${session?.user?.name}`,
@@ -19,12 +21,16 @@ export default function FormCriarTask() {
     descricao: '',
   })
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
     const data = await fetch('/api/tasks', {
       method: 'POST',
       body: JSON.stringify(formData)
     })
     const json = await data.json()
+
+    router.push("/")
   }
 
   const handleForm = (e: any) => {
