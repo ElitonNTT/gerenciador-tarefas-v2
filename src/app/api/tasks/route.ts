@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const { id, user, titulo, descricao } = await request.json();
+    const { id, user, titulo, descricao, executado } = await request.json();
 
     const update = await prisma.tasks.update({
       where: {
@@ -34,12 +34,14 @@ export async function PUT(request: Request) {
         user: user,
         titulo: titulo,
         descricao: descricao,
+        executado: executado,
       },
     });
     return NextResponse.json({
       user: update.user,
       titulo: update.titulo,
       descricao: update.descricao,
+      executado: update.executado,
     });
   } catch (error) {
     return NextResponse.error;
