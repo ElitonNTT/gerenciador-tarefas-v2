@@ -15,4 +15,5 @@ model Tasks {
   user String
   titulo String
   descricao String
+  executado String?
 }
