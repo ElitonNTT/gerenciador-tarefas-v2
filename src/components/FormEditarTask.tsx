@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -21,7 +21,7 @@ export default function FormEditarTask(props: { id: string, user: string, titulo
     descricao: props.descricao,
   })
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data = await fetch('/api/tasks', {
       method: 'PUT',
