@@ -47,7 +47,7 @@ export default function Lista() {
           value={filtro}
           onChange={handleFilter}
           placeholder="Buscar..."
-          className="flex self-center outline-none border-b-2 w-2/5"
+          className="flex self-center outline-none border-b-2 w-5/6 md:w-2/5"
         />
         {filteredList.map((task, index) => (
           <Accordion
