@@ -1,15 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import { useSession, signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 function Header() {
   const { data: session } = useSession()
+  const router = useRouter()
+
+  if (!session) {
+    router.push('/login')
+  }
 
   return (
     <div className='flex justify-between items-center px-4 py-2'>
       <div>Logo</div>
       <div className='flex items-center gap-4 '>
-
         {!session ? (<></>) : (
           <>
             <div>{session?.user?.name}</div>
