@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 function Header() {
   const { data: session } = useSession()
   const router = useRouter()
-
   if (!session) {
     router.push('/login')
   }

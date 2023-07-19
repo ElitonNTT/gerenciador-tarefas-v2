@@ -20,7 +20,8 @@ function ModalExec(props: ModalExecProps) {
       body: JSON.stringify({ id: props.id, executado: session?.user?.name })
     })
     const json = await data.json()
-    handleClose()
+    alert('Atualizado')
+    router.refresh()
     return json
   }
 
