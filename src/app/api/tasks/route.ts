@@ -48,6 +48,15 @@ export async function PUT(request: Request) {
   }
 }
 
+export async function GET() {
+  try {
+    const data = await prisma.tasks.findMany();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.error;
+  }
+}
+
 export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();

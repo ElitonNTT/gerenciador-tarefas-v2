@@ -1,11 +1,34 @@
-import prisma from "@/lib/prisma/prismaClient";
+"use client";
 import Link from "next/link";
 import Accordion from "./Accordion";
+import { useEffect, useState } from "react";
 
-const getTasks = async () => prisma.tasks.findMany({});
+export default function Lista() {
+  const [lista, setLista] = useState([]);
+  const [filtro, setFiltro] = useState("");
 
-export default async function Lista() {
-  const data = await getTasks();
+  const getFetchData = async () => {
+    const response = await fetch("/api/tasks", { next: { revalidate: 5 } });
+    if (!response.ok) {
+      throw new Error("Erro no Fetch");
+    }
+    const data = await response.json();
+    setLista(data);
+  };
+
+  useEffect(() => {
+    getFetchData();
+  }, []);
+
+  const handleFilter = (e) => {
+    const search = e.target.value;
+    setFiltro(search);
+  };
+
+  const filteredList = lista.filter((element) =>
+    element.titulo.toLowerCase().includes(filtro.toLowerCase())
+  );
+  console.log(filteredList);
 
   return (
     <>
@@ -21,10 +44,12 @@ export default async function Lista() {
         </div>
         <input
           type="text"
+          value={filtro}
+          onChange={handleFilter}
           placeholder="Buscar..."
           className="flex self-center outline-none border-b-2 w-2/5"
         />
-        {data.map((task, index) => (
+        {filteredList.map((task, index) => (
           <Accordion
             key={index}
             id={task.id}
