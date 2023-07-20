@@ -8,7 +8,7 @@ export default function Lista() {
   const [filtro, setFiltro] = useState("");
 
   const getFetchData = async () => {
-    const response = await fetch("/api/tasks", { next: { revalidate: 5 } });
+    const response = await fetch("/api/tasks");
     if (!response.ok) {
       throw new Error("Erro no Fetch");
     }
