@@ -7,7 +7,7 @@ function Header() {
 
   return (
     <div className="flex justify-between items-center px-4 py-2">
-      <div>Logo</div>
+      <div>LOGO</div>
       <div className="flex items-center gap-4 ">
         {!session ? (
           <></>

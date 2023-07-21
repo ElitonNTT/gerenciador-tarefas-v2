@@ -2,36 +2,27 @@
 import Link from "next/link";
 import Accordion from "./Accordion";
 import { useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Lista() {
-  const [lista, setLista] = useState([]);
   const [filtro, setFiltro] = useState("");
-
-  const queryClient = useQueryClient();
-  queryClient.invalidateQueries({ queryKey: ["data"] });
 
   const getFetchData = async () => {
     const response = await fetch("/api/tasks");
-    if (!response.ok) {
-      throw new Error("Erro no Fetch");
-    }
     const data = await response.json();
-    setLista(data);
     return data;
   };
-
-  const taskListQuery = useQuery({
-    queryKey: ["data"],
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["task-data"],
     queryFn: getFetchData,
   });
 
+  //filtro de busca
   const handleFilter = (e) => {
     const search = e.target.value;
     setFiltro(search);
   };
-
-  const filteredList = lista.filter((element) =>
+  const filteredList = data?.filter((element) =>
     element.titulo.toLowerCase().includes(filtro.toLowerCase())
   );
 
@@ -54,16 +45,22 @@ export default function Lista() {
           placeholder="Buscar..."
           className="flex self-center outline-none border-b-2 w-5/6 md:w-2/5"
         />
-        {filteredList.map((task, index) => (
-          <Accordion
-            key={index}
-            id={task.id}
-            user={task.user}
-            titulo={task.titulo}
-            descricao={task.descricao}
-            executado={task.executado}
-          />
-        ))}
+        {isLoading ? (
+          <div className="flex self-center justify-center animate-spin border-t-4 border-b-4 w-10 h-10 rounded-full"></div>
+        ) : (
+          <>
+            {filteredList.map((task, index) => (
+              <Accordion
+                key={index}
+                id={task.id}
+                user={task.user}
+                titulo={task.titulo}
+                descricao={task.descricao}
+                executado={task.executado}
+              />
+            ))}
+          </>
+        )}
       </main>
     </>
   );

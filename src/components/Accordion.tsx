@@ -5,9 +5,8 @@ import { useEffect, useState } from 'react'
 import EditSvg from "@/assets/create-outline.svg";
 import Checkbox from "@/assets/checkbox-outline.svg";
 import DeleteButton from './DeleteButton';
-import { useModalOpen } from '@/hooks/useModalOpen';
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useQueryClient } from '@tanstack/react-query';
 
 interface AccordionProps {
   id: string,
@@ -18,30 +17,29 @@ interface AccordionProps {
 }
 
 function Accordion(props: AccordionProps) {
-  const router = useRouter()
   const { data: session } = useSession()
-  const { isOpen, handleOpen, handleClose } = useModalOpen()
+  const [isOpen, setIsOpen] = useState(false)
   const [visible, setVisible] = useState(false)
+  const queryClient = useQueryClient();
 
   const handleAccordion = () => {
     visible ? setVisible(false) : setVisible(true)
-    handleClose()
+    setIsOpen(false)
   }
   const handleModalExec = () => {
-    handleOpen()
+    isOpen ? setIsOpen(false) : setIsOpen(true)
   }
-
-  const handleSubmitExec = async (e: any) => {
-    e.preventDefault()
+  async function handleSubmitExec(e: any) {
+    e.preventDefault();
     const resp = await fetch('/api/tasks', {
       method: 'PUT',
       body: JSON.stringify({ id: props.id, executado: session?.user?.name })
-    })
-    const data = await resp.json()
-    alert('Atualizado')
-    handleClose()
-    router.refresh()
-    return data
+    });
+    const data = await resp.json();
+    alert('Atualizado');
+    setIsOpen(false)
+    queryClient.invalidateQueries({ queryKey: ["task-data"] });
+    return data;
   }
 
   useEffect(() => {
@@ -58,6 +56,7 @@ function Accordion(props: AccordionProps) {
               <button onClick={handleSubmitExec} className='bg-green-400 hover:bg-green-600 hover:text-white rounded-md px-4 py-2'>
                 Confirmar
               </button>
+              <button className='text-sm hover:text-gray-400' onClick={() => setIsOpen(false)}>Cancelar</button>
             </div >)}
           <h3 className="font-bold text-xl cursor-pointer w-full" onClick={handleAccordion}>{props.titulo}</h3>
         </div>
@@ -75,15 +74,13 @@ function Accordion(props: AccordionProps) {
           <DeleteButton id={props.id} />
         </div>
       </div>
-      <div className=''>
-        {visible && (
-          <>
-            <div className='text-sm font-light mt-4'>Criado por:{props.user}</div>
-            {props.executado && <div className='text-sm font-light text-green-400'>Sendo executado por:{props.executado}</div>}
-            <div className='text-lg font-normal'>{props.descricao}</div>
-          </>
-        )}
-      </div>
+      {visible && (
+        <>
+          <div className='text-sm font-light mt-4'>Criado por:{props.user}</div>
+          {props.executado && <div className='text-sm font-light text-green-400'>Sendo executado por:{props.executado}</div>}
+          <div className='text-lg font-normal'>{props.descricao}</div>
+        </>
+      )}
     </main>
   )
 }
