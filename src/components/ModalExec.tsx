@@ -1,14 +1,11 @@
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import { useModalOpen } from "@/hooks/useModalOpen"
 
 interface ModalExecProps {
   id: string,
 }
 
 function ModalExec(props: ModalExecProps) {
-
-  const { isOpen, handleClose } = useModalOpen()
 
   const router = useRouter()
   const { data: session } = useSession()

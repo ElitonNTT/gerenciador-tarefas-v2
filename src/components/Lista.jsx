@@ -2,10 +2,14 @@
 import Link from "next/link";
 import Accordion from "./Accordion";
 import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function Lista() {
   const [lista, setLista] = useState([]);
   const [filtro, setFiltro] = useState("");
+
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({ queryKey: ["data"] });
 
   const getFetchData = async () => {
     const response = await fetch("/api/tasks");
@@ -14,7 +18,13 @@ export default function Lista() {
     }
     const data = await response.json();
     setLista(data);
+    return data;
   };
+
+  const taskListQuery = useQuery({
+    queryKey: ["data"],
+    queryFn: getFetchData,
+  });
 
   useEffect(() => {
     getFetchData();

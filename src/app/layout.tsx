@@ -1,9 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Provider from "@/components/Provider";
+import AuthProvider from "@/components/AuthProvider";
+import Providers from "@/app/providers"
 import Header from "@/components/Header";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Gerenciador de Tarefas",
@@ -17,12 +16,14 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Provider>
+      <AuthProvider>
         <body className="min-h-screen bg-gradient-to-t  from-purple-300 to bg-purple-400">
-          <Header />
-          {children}
+          <Providers>
+            <Header />
+            {children}
+          </Providers>
         </body>
-      </Provider>
+      </AuthProvider>
     </html>
   );
 }
