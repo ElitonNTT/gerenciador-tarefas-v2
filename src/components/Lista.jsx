@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Accordion from "./Accordion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function Lista() {
@@ -25,10 +25,6 @@ export default function Lista() {
     queryKey: ["data"],
     queryFn: getFetchData,
   });
-
-  useEffect(() => {
-    getFetchData();
-  }, []);
 
   const handleFilter = (e) => {
     const search = e.target.value;

@@ -29,8 +29,8 @@ export default function FormCriarTask() {
       body: JSON.stringify(formData)
     })
     const json = await data.json()
-
     router.push("/")
+    return json
   }
 
   const handleForm = (e: any) => {
