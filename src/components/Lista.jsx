@@ -28,7 +28,6 @@ export default function Lista() {
   const filteredList = lista.filter((element) =>
     element.titulo.toLowerCase().includes(filtro.toLowerCase())
   );
-  console.log(filteredList);
 
   return (
     <>
