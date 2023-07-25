@@ -3,7 +3,7 @@ import Link from "next/link";
 import Accordion from "./Accordion";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-
+import { Toaster } from "react-hot-toast";
 export default function Lista() {
   const [filtro, setFiltro] = useState("");
 
@@ -28,6 +28,7 @@ export default function Lista() {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <main className="flex flex-col h-5/6 w-5/6 gap-2 bg-white p-4 rounded-md shadow-lg shadow-purple-400">
         <div className="flex justify-between items-center mb-4">
           <h2 className="font-bold text-4xl">Gerenciador de Tarefas</h2>

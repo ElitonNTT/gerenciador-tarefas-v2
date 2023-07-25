@@ -3,9 +3,10 @@ import GoogleProvider from "next-auth/providers/google";
 import DiscordProvider from "next-auth/providers/discord";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "@/lib/db";
+import { db as prisma } from "@/lib/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
-import { loginUser } from "@/lib/loginUser";
+import bcrypt from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db as any),
@@ -18,14 +19,22 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials): Promise<any> {
         if (credentials == null) throw new Error("Sem credenciais!");
-        const { email, password } = credentials;
-        const user = await loginUser({ email, password });
-
-        return {
-          id: user.id.toString(),
-          name: user.name,
-          email: user.email,
-        };
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        });
+        if (!user || !user.password) {
+          throw new Error("Usuário não registrado com Credentials");
+        }
+        const matchPassword = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+        if (!matchPassword) {
+          throw new Error("Senha incorreta");
+        }
+        return user;
       },
     }),
     GithubProvider({
@@ -47,7 +56,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_URL,
   debug: process.env.NODE_ENV === "development",
   pages: {
-    signIn: "/login",
+    signIn: "/",
     signOut: "/login",
   },
 };

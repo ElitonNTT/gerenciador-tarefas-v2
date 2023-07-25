@@ -6,7 +6,7 @@ import { ImGithub } from 'react-icons/im'
 import { BsDiscord } from 'react-icons/bs'
 
 
-const LoginButton = () => {
+const ProvidersButton = () => {
   const { data: session } = useSession()
   const router = useRouter()
 
@@ -41,4 +41,4 @@ const LoginButton = () => {
   )
 }
 
-export default LoginButton
+export default ProvidersButton
